@@ -267,11 +267,11 @@ function svgGridAndAxis(maxVal, labels, values, metas, dimIndex, ratios){
     gridSvg += `<text x="${padL-10}" y="${y+4}" text-anchor="end" font-size="10.5" fill="#7c8aa5">${val.toFixed(1)}</text>`;
     if(hasRatio){
       const ratioVal = (ratioMax/steps)*s;
-      gridSvg += `<text x="${svgW-padRight+10}" y="${y+4}" text-anchor="start" font-size="10" fill="#facc15">${ratioVal.toFixed(3)}</text>`;
+      gridSvg += `<text x="${svgW-padRight+10}" y="${y+4}" text-anchor="start" font-size="10" fill="#38bdf8">${ratioVal.toFixed(3)}</text>`;
     }
   }
   if(hasRatio){
-    gridSvg += `<text x="${svgW-padRight+10}" y="${padT-12}" text-anchor="start" font-size="10" fill="#facc15" font-weight="700">Indic./HL</text>`;
+    gridSvg += `<text x="${svgW-padRight+10}" y="${padT-12}" text-anchor="start" font-size="10" fill="#38bdf8" font-weight="700">Indic./HL</text>`;
   }
 
   let barsSvg = '';
@@ -294,9 +294,11 @@ function svgGridAndAxis(maxVal, labels, values, metas, dimIndex, ratios){
       const rx = x + barW + 3;
       const ry = ratioYScale(ratios[i]);
       const rh = padT + plotH - ry;
-      const rcolor = dim ? '#7a6118' : '#facc15';
+      const rcolor = dim ? '#1d4a63' : '#38bdf8';
       barsSvg += `<rect x="${rx}" y="${ry}" width="${ratioBarW}" height="${Math.max(rh,0)}" rx="1.5" fill="${rcolor}"><title>${lab}: ${ratios[i].toFixed(4)} (Indicador/HL)</title></rect>`;
-      barsSvg += `<text x="${rx+ratioBarW/2}" y="${Math.max(ry-6,12)}" font-size="9.5" fill="#facc15" text-anchor="middle" font-weight="700" transform="rotate(-60 ${rx+ratioBarW/2} ${Math.max(ry-6,12)})">${ratios[i].toFixed(3)}</text>`;
+      const midX = rx + ratioBarW/2;
+      const midY = ry + Math.max(rh,0)/2;
+      barsSvg += `<text x="${midX}" y="${midY}" font-size="8.5" fill="#0b0f19" text-anchor="middle" dominant-baseline="middle" font-weight="700" transform="rotate(-90 ${midX} ${midY})">${ratios[i].toFixed(3)}</text>`;
     }
     const rot = n > 12 ? `transform="rotate(-40 ${xCenter(i)} ${H-padB+18})" text-anchor="end"` : '';
     barsSvg += `<text class="axis-label" x="${xCenter(i)}" y="${H-padB+20}" ${rot}>${lab}</text>`;
@@ -571,7 +573,7 @@ function setLegend(view){
     <span><span class="dot" style="background:var(--green)"></span>Cumple meta</span>
     <span><span class="dot" style="background:var(--red)"></span>No cumple meta</span>
     <span><span class="line-swatch"></span>Meta (constante, solo excluye domingos)</span>
-    <span><span class="dot" style="background:#facc15"></span>Barra delgada: Indicador / TOTAL HL envasados (valor visible arriba, eje derecho)</span>`;
+    <span><span class="dot" style="background:#38bdf8"></span>Barra delgada: Indicador / TOTAL HL envasados (valor dentro de la barra, eje derecho)</span>`;
 }
 
 function renderAtipicos(){
